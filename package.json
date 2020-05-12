@@ -1,23 +1,23 @@
 {
-  "name": "restserver",
-  "version": "1.0.0",
-  "description": "restServer",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/GONNZ/restServer.git"
-  },
-  "author": "gonnz",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/GONNZ/restServer/issues"
-  },
-  "homepage": "https://github.com/GONNZ/restServer#readme",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1"
-  }
+    "name": "restserver",
+    "version": "1.0.0",
+    "description": "restServer",
+    "main": "index.js",
+    "scripts": {
+        "start": "node server/server"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/GONNZ/restServer.git"
+    },
+    "author": "gonnz",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/GONNZ/restServer/issues"
+    },
+    "homepage": "https://github.com/GONNZ/restServer#readme",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "express": "^4.17.1"
+    }
 }

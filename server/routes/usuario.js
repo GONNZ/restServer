@@ -1,10 +1,13 @@
 const express = require('express')
 const UsuarioModel = require('../models/usuario')
+const { tokenValidation, adminRoleValidation } = require('../middlewares/autentication')
 const bcrypt = require('bcrypt');
 const _ = require('underscore')
 const app = express()
 
-app.get('/usuario', (req, res) => {
+app.get('/usuario', tokenValidation, (req, res) => {
+
+
     let desde = req.query.desde || 0
     desde = Number(desde)
 
@@ -22,7 +25,7 @@ app.get('/usuario', (req, res) => {
                 })
             }
 
-            UsuarioModel.count({ estado: true }, (err, conteo) => {
+            UsuarioModel.countDocuments({ estado: true }, (err, conteo) => {
 
                 res.json({
                     ok: true,
@@ -36,7 +39,7 @@ app.get('/usuario', (req, res) => {
         })
 })
 
-app.post('/usuario', async(req, res) => {
+app.post('/usuario', [tokenValidation, adminRoleValidation], async(req, res) => {
     let body = req.body
     const salt = await bcrypt.genSalt(10)
 
@@ -67,10 +70,10 @@ app.post('/usuario', async(req, res) => {
 
 })
 
-app.put('/usuario/:id', (req, res) => {
+app.put('/usuario/:id', tokenValidation, (req, res) => {
     let id = req.params.id
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado'])
-    console.log(body);
+
     // delete body.password
     // delete body.google
 
@@ -94,7 +97,7 @@ app.put('/usuario/:id', (req, res) => {
 
 })
 
-app.delete('/usuario/:id', (req, res) => {
+app.delete('/usuario/:id', tokenValidation, (req, res) => {
     let id = req.params.id
     let cambiaEstado = { estado: false }
 

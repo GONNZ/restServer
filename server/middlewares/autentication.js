@@ -1,6 +1,7 @@
 // ========================================
 // TOKEN VALIDATION
 // ========================================
+
 const jwt = require('jsonwebtoken')
 
 let tokenValidation = (req, res, next) => {
@@ -26,6 +27,7 @@ let tokenValidation = (req, res, next) => {
 // ========================================
 // ADMIN ROLE VALIDATION
 // ========================================
+
 let adminRoleValidation = (req, res, next) => {
 
     let usuario = req.usuario

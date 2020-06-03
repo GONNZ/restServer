@@ -88,6 +88,3 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
-#
-uploads/productos/*
-uploads/usuarios/*

@@ -68,7 +68,13 @@ app.put('/upload/:tipo/:id', function(req, res) {
             })
         }
 
-        imagenUsuario(id, res, nombreArchivo)
+        if (tipo === 'usuarios') {
+            imagenUsuario(id, res, nombreArchivo)
+        } else {
+            imagenProducto(id, res, nombreArchivo)
+        }
+
+
 
     })
 })
@@ -91,6 +97,7 @@ function imagenUsuario(id, res, nombreArchivo) {
         }
 
         if (!usuario) {
+            borraArchivo(nombreArchivo, 'usuarios')
             return res.status(400).json({
                 ok: false,
                 err: {
@@ -102,7 +109,6 @@ function imagenUsuario(id, res, nombreArchivo) {
         borraArchivo(usuario.img, 'usuarios')
 
         usuario.img = nombreArchivo
-
 
         usuario.save((err, usuarioGuardado) => {
             res.json({
@@ -116,8 +122,41 @@ function imagenUsuario(id, res, nombreArchivo) {
 
 }
 
-function imagenProducto(id) {
+function imagenProducto(id, res, nombreArchivo) {
+    ProductModel.findById(id, (err, product) => {
+        if (err) {
 
+            borraArchivo(nombreArchivo, 'productos')
+            return res.status(500).json({
+                ok: false,
+                err
+            })
+        }
+
+        if (!product) {
+            borraArchivo(nombreArchivo, 'productos')
+            return res.status(400).json({
+                ok: false,
+                err: {
+                    message: 'Producto no existe'
+                }
+            })
+        }
+
+        borraArchivo(product.img, 'productos')
+
+        product.img = nombreArchivo
+
+        product.save((err, productGuardado) => {
+            res.json({
+                ok: true,
+                usuario: productGuardado,
+                img: nombreArchivo
+
+            })
+        })
+
+    })
 }
 
 function borraArchivo(nombreImg, tipo) {
